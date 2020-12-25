@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add to Database</title>
+        <link rel='stylesheet' href="./styles.css">
+    </head>
+    <body>
+        <h3>Places Adder</h3>
+        <form class = "places">
+            <label for="place-name">City Name</label><br>
+            <input type="text" id="place-name" onchange=""><br>
+            <label for="description-place">Description</label><br>
+            <input type="text" onchange="" id="description-place"><br>
+            <label for="season">Season</label><br>
+            <input type="text" onchange="" id="season"><br>
+            <label for="imageURL">Image URL</label><br>
+            <input type="url" onchange="" id="imageURL"><br>
+            <button id="add-place" type="button" onclick="">Add Place</button>
+        </form> <br>
+        <h3>Sights Adder</h3>
+        <form>
+            <label for="in-place">Place</label><br>
+            <input type="url" onchange="" id="in-place"><br>
+            <label for="sight">Sight Name</label><br>
+            <input type="text" id="sight" onchange=""><br>
+            <label for="description-sight">Description</label><br>
+            <input type="text" onchange="" id="description-sight"><br>
+            <label for="info-sight">Information</label><br>
+            <input type="text" onchange="" id="info-sight"><br>
+            <button id="add-sight" type="button" onclick="">Add Sight</button>
+        </form>
+        <script>
+            document.getElementById('add-place').onclick = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/places', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name: document.getElementById('place-name').value,
+                            description: document.getElementById('description-place').value,
+                            season: document.getElementById('season').value,
+                            imageURL: document.getElementById('imageURL').value,
+                        }),
+                    });
+                    if(response.status >= 200 && response.status < 300)
+                        alert('Added to database successfully!');
+                }
+                catch(error) {
+                    alert(error);
+                }
+            }
+            document.getElementById('add-sight').onclick = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/sights', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            place: document.getElementById('in-place').value,
+                            sight: document.getElementById('sight').value,
+                            description: document.getElementById('description-sight').value,
+                            info: document.getElementById('info-sight').value,
+                        }),
+                    });
+                    if(response.status >= 200 && response.status < 300)
+                        alert('Added to database successfully!');
+                }
+                catch(error) {
+                    alert(error);
+                }
+            }
+        </script>
+    </body>
+</html>
